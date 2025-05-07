@@ -1,0 +1,47 @@
+@model IEnumerable<BlogSystem.Web.ViewModels.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "Manage User Roles";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>
+                        @string.Join(", ", user.Roles)
+                    </td>
+                    <td>
+                        <form asp-action="UpdateUserRole" method="post" class="d-inline">
+                            <input type="hidden" name="userId" value="@user.UserId" />
+                            <div class="btn-group">
+                                <button type="submit" name="role" value="Admin" class="btn btn-sm @(user.Roles.Contains("Admin") ? "btn-success" : "btn-outline-success")">
+                                    Admin
+                                </button>
+                                <button type="submit" name="role" value="Editor" class="btn btn-sm @(user.Roles.Contains("Editor") ? "btn-success" : "btn-outline-success")">
+                                    Editor
+                                </button>
+                                <button type="submit" name="role" value="Reader" class="btn btn-sm @(user.Roles.Contains("Reader") ? "btn-success" : "btn-outline-success")">
+                                    Reader
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 
